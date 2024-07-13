@@ -25,7 +25,7 @@ def create_merchant():
     name_list = ['Xiao', 'Ji', 'Nameless', 'Temujin', 'Vladmir', 'Kazan']
 
     name = random.choice(name_list) + ' the ' + random.choice(type_list)
-    type = random.choice(name_list)
+    type = random.choice(type_list)
 
     if type == 'Warrior' or 'golden':
         item = ['sword',' hp potion']
@@ -100,11 +100,11 @@ print('-'*10)
 print(f'You have entered a {place}')
 print('-'*10)
 
-for i in npc_list:
+for index, npc in enumerate(npc_list):
     print('-'*10)
-    print(f'room number: {i + 1}')
-    print(f'you have encountered a {npc_list[i]}')
+    print(f'room number: {index + 1}')
+    print(f'you have encountered a {npc}')
     print('-'*10)
-    action = input('wuat will you do?')
+    action = input('what will you do? ')
     if action == 'leave':
         break
