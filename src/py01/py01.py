@@ -1,5 +1,6 @@
 import math
 import random
+import os
 
 npc_list = []
 level = random.randint(0, 100)
@@ -49,6 +50,24 @@ def create_place():
 
     return place_name
 
+os.system('cls')
+print('''
+      _                                                                    _   
+     | |                                                                  | |  
+   __| |_   _ _ __   __ _  ___  ___  _ __  _ __  _ __ ___  _ __ ___  _ __ | |_ 
+  / _` | | | | '_ \ / _` |/ _ \/ _ \| '_ \| '_ \| '__/ _ \| '_ ` _ \| '_ \| __|
+ | (_| | |_| | | | | (_| |  __/ (_) | | | | |_) | | | (_) | | | | | | |_) | |_ 
+  \__,_|\__,_|_| |_|\__, |\___|\___/|_| |_| .__/|_|  \___/|_| |_| |_| .__/ \__|
+                     __/ |                | |                       | |        
+                    |___/                 |_|                       |_|
+      ''')
+start = input('''
+              
+Wellcome to the game, type anything to begin
+              
+>''')
+os.system('cls')
+
 #character creation
 
 player_name = input('How is you called? ')
@@ -85,6 +104,8 @@ while True:
         break
     else:
         print('This class do not exist')
+    
+os.system('cls')
 
 #the game
 
@@ -99,12 +120,16 @@ place = create_place()
 print('-'*10)
 print(f'You have entered a {place}')
 print('-'*10)
+start = input('input anything to continue')
+os.system('cls')
 
 for index, npc in enumerate(npc_list):
     print('-'*10)
+    print(f'{place}')
     print(f'room number: {index + 1}')
     print(f'you have encountered a {npc}')
     print('-'*10)
     action = input('what will you do? ')
+    os.system('cls')
     if action == 'leave':
         break
