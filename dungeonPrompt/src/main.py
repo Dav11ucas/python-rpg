@@ -1,54 +1,6 @@
-import math
-import random
 import os
-
-npc_list = []
-level = random.randint(0, 100)
-
-#player stats
-player_level = 0
-
-def create_monster():
-    name_list = ['lobo', 'troll', 'skeleton', 'cyclop']
-    name = random.choice(name_list)
-
-    new_monster = {
-        "nome": f"{name} level#{level}",
-        "level": level,
-        "hp": 9 * level,
-        "xp": math.floor(level / 3)
-    }
-
-    npc_list.append(new_monster)
-
-def create_merchant():
-    type_list = ['Black Mage', 'Warrior', 'Student', 'Monk', 'golden']
-    name_list = ['Xiao', 'Ji', 'Nameless', 'Temujin', 'Vladmir', 'Kazan']
-
-    name = random.choice(name_list) + ' the ' + random.choice(type_list)
-    type = random.choice(type_list)
-
-    if type == 'Warrior' or 'golden':
-        item = ['sword',' hp potion']
-    elif type == 'Monk' or 'Student':
-        item = ['sacred botle']
-    elif type == 'Black Mage':
-        item = ['roten potion', 'hp potion']
-    
-    new_merchant = {
-        "nome": f"{name} level#{level}",
-        "type": type,
-        "level": level,
-        "items": item,
-    }
-
-    npc_list.append(new_merchant)
-
-def create_place():
-    name_list = ['swamp', 'cave', 'mine']
-    place_name = random.choice(name_list)
-
-    return place_name
+import NpcCreator
+import random
 
 os.system('cls')
 print('''
@@ -122,14 +74,49 @@ print(f'You have entered a {place}')
 print('-'*10)
 start = input('input anything to continue')
 os.system('cls')
+for index, NpcCreator in enumerate(npc_list):
+    if NpcCreator['npc_type'] == 'monster':
+        print('-'*10)
+        print(f'place: {place}')
+        print(f'room number: {index + 1}')
+        print(f'you have encountered a monster')
+        print('-'*10)
+        print(f'{NpcCreator['name']}')
+        print('-'*10)
+        action = input('what will you do? [1- run | 2- atack | 3- inventory]')
+        os.system('cls')
+        if action == 'leave':
+            break
+        elif action == '1':
+            dice = random.randint(0, 100)
+            if dice >= NpcCreator['level']:
+                print('you did run')
+            else:
+                print('You failed to run')
+                print('-'*10)
+                print(f'place: {place}')
+                print(f'room number: {index + 1}')
+                print(f'you have encountered a monster')
+                print('-'*10)
+                print(f'{NpcCreator['name']}')
+                print('-'*10)
+                action = input('what will you do? [2- atack | 3- inventory]')
+                os.system('cls')
+    elif NpcCreator['npc_type'] == 'merchant':
+        print('-'*10)
+        print(f'place: {place}')
+        print(f'room number: {index + 1}')
+        print(f'you have encountered a merchant')
+        print('-'*10)
+        print(f'''
+name: {NpcCreator['name']}
 
-for index, npc in enumerate(npc_list):
-    print('-'*10)
-    print(f'{place}')
-    print(f'room number: {index + 1}')
-    print(f'you have encountered a {npc}')
-    print('-'*10)
-    action = input('what will you do? ')
-    os.system('cls')
-    if action == 'leave':
-        break
+items: {NpcCreator['items']}
+''')
+        print('-'*10)
+        action = input('what will you do? [1- leave | 2- buy | 3- inventory]')
+        os.system('cls')
+        if action == 'leave':
+            break
+
+        #solve the item problem
