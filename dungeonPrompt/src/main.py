@@ -1,122 +1,76 @@
-import os
-import NpcCreator
 import random
+import os
 
-os.system('cls')
-print('''
-      _                                                                    _   
-     | |                                                                  | |  
-   __| |_   _ _ __   __ _  ___  ___  _ __  _ __  _ __ ___  _ __ ___  _ __ | |_ 
-  / _` | | | | '_ \ / _` |/ _ \/ _ \| '_ \| '_ \| '__/ _ \| '_ ` _ \| '_ \| __|
- | (_| | |_| | | | | (_| |  __/ (_) | | | | |_) | | | (_) | | | | | | |_) | |_ 
-  \__,_|\__,_|_| |_|\__, |\___|\___/|_| |_| .__/|_|  \___/|_| |_| |_| .__/ \__|
-                     __/ |                | |                       | |        
-                    |___/                 |_|                       |_|
-      ''')
-start = input('''
-              
-Wellcome to the game, type anything to begin
-              
->''')
-os.system('cls')
+#global variables
+player_hp = 0
+player_damage = 0
+player_scape = 0
+player_dodge = 0
+npc_list = []
 
-#character creation
+def create_place():
+    #escolher uma lista de monstros, merdadores e qualquer outra possibilidade para as salas.
+    place_list = ['Swamp', 'Forest', 'Ruins', 'Cave']
+    place = random.choice(place_list)
+    return place
 
-player_name = input('How is you called? ')
-print('-'*10)
-print('''
-      
-    Warrior - Endure the battlefield
-      10 hp / 5 damage / speed 0
-      
-    Mage - Use your knoledge
-      5 hp / 7 damage / speed 3
-      
-    Cursed - You have no choice but the destiny
-      7 hp / 5 damage / speed 4
-      
-''')
-print('-'*10)
-while True:
-    player_class = input('What class will you chose? ')
-    if player_class == 'warrior':
-        player_hp = 10
-        player_damage = 5
-        speed = 0
-        break
-    elif player_class == 'mage':
-        player_hp = 5
-        player_damage = 7
-        speed = 3
-        break
-    elif player_class == 'cursed':
-        player_hp = 7
-        player_damage = 5
-        speed = 4
-        break
-    else:
-        print('This class do not exist')
-    
-os.system('cls')
+def create_monster():
+    #cada monstro deve ter seus status de assim como o player, com o quanto de xp e loot que entrega.
+    #o loot deve ser randomico dentro de uma pequenda possibilidade de drop e não drop
+    if place == 'Swamp':
+        monster_list = [
+            {
+            'name': 'Swamp Slime'
+            }
+            ]
+    elif place == 'Forest':
+        monster_list = [
+            {
+            'name': 'Forest Slime'
+            }
+            ]
+    elif place == 'Ruins':
+        monster_list = [
+            {
+            'name': 'Ruins Slime'
+            }
+            ]
+    elif place == 'Cave':
+        monster_list = [
+            {
+            'name': 'Cave Slime'
+            }
+            ]
 
-#the game
+#def create_merchant():
+#cada mercador deve ter seus produtos, e por enquanto é isso
 
-for n in range (0,50):
-    create_monster()
-    create_merchant()
+#def create_room():
+#cada sala deve ser padronizada, mas com suas próprias pequenas especificidades para cada lugar
 
-random.shuffle(npc_list)
-
-place = create_place()
-
-print('-'*10)
-print(f'You have entered a {place}')
-print('-'*10)
-start = input('input anything to continue')
-os.system('cls')
-for index, NpcCreator in enumerate(npc_list):
-    if NpcCreator['npc_type'] == 'monster':
-        print('-'*10)
-        print(f'place: {place}')
-        print(f'room number: {index + 1}')
-        print(f'you have encountered a monster')
-        print('-'*10)
-        print(f'{NpcCreator['name']}')
-        print('-'*10)
-        action = input('what will you do? [1- run | 2- atack | 3- inventory]')
+def create_player():
+    while True:
         os.system('cls')
-        if action == 'leave':
-            break
-        elif action == '1':
-            dice = random.randint(0, 100)
-            if dice >= NpcCreator['level']:
-                print('you did run')
+        print('''Atention, your initial status can only reach 10 with the sum of every items
+There will be DAMAGE, HEALTH, SCAPE, and DODGE
+              ''')
+        try:
+            player_damage = int(input('select value to your damage: '))
+            player_hp = int(input('select value to your health: '))
+            player_scape = int(input('select value to your scapee: '))
+            player_dodge = int(input('select value to your dodge: '))
+            status_sum = player_damage + player_hp + player_scape + player_dodge
+            if status_sum == 10:
+                break
             else:
-                print('You failed to run')
-                print('-'*10)
-                print(f'place: {place}')
-                print(f'room number: {index + 1}')
-                print(f'you have encountered a monster')
-                print('-'*10)
-                print(f'{NpcCreator['name']}')
-                print('-'*10)
-                action = input('what will you do? [2- atack | 3- inventory]')
                 os.system('cls')
-    elif NpcCreator['npc_type'] == 'merchant':
-        print('-'*10)
-        print(f'place: {place}')
-        print(f'room number: {index + 1}')
-        print(f'you have encountered a merchant')
-        print('-'*10)
-        print(f'''
-name: {NpcCreator['name']}
+                print("The sum of your stats must be equal to 10.")
+                accept = input()
+        except ValueError:
+            os.system('cls')
+            print("Please enter only numbers.")
+os.system('clear')
 
-items: {NpcCreator['items']}
-''')
-        print('-'*10)
-        action = input('what will you do? [1- leave | 2- buy | 3- inventory]')
-        os.system('cls')
-        if action == 'leave':
-            break
+#Game
 
-        #solve the item problem
+create_player()
