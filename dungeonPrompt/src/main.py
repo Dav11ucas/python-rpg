@@ -1,11 +1,13 @@
 import random
 import os
+import json
 
 #global variables
 player_hp = 0
 player_damage = 0
 player_scape = 0
 player_dodge = 0
+
 npc_list = []
 
 def create_place():
@@ -14,33 +16,22 @@ def create_place():
     place = random.choice(place_list)
     return place
 
-def create_monster():
-    #cada monstro deve ter seus status de assim como o player, com o quanto de xp e loot que entrega.
+def select_npcs():
     #o loot deve ser randomico dentro de uma pequenda possibilidade de drop e não drop
+    with open("data.json", "r") as f:
+        monsters = json.load(f)
+
+    place = create_place()
+    monster_list = []
+
     if place == 'Swamp':
-        monster_list = [
-            {
-            'name': 'Swamp Slime'
-            }
-            ]
+        monster_list.append(monsters[0])
     elif place == 'Forest':
-        monster_list = [
-            {
-            'name': 'Forest Slime'
-            }
-            ]
+        monster_list.append(monsters[1])
     elif place == 'Ruins':
-        monster_list = [
-            {
-            'name': 'Ruins Slime'
-            }
-            ]
+        monster_list.append(monsters[2])
     elif place == 'Cave':
-        monster_list = [
-            {
-            'name': 'Cave Slime'
-            }
-            ]
+        monster_list.append(monsters[3])
 
 #def create_merchant():
 #cada mercador deve ter seus produtos, e por enquanto é isso
@@ -74,3 +65,4 @@ os.system('clear')
 #Game
 
 create_player()
+select_npcs()
