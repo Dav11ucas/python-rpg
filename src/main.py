@@ -75,7 +75,7 @@ class events_class:
 
         merchant_dictionary = {
             'event_type': 'merchant',
-            'name': merchant_name + 'the' + merchant_type,
+            'name': merchant_name + ' the ' + merchant_type,
             'type': merchant_type,
             'items': item
         }
@@ -97,7 +97,13 @@ for i in range(10):
     #talvez transformar essa ação em uma função de gerar eventos.
 
 for current_event in event_list:
-    print(current_event)
-    action = input('type 1 to continue, 2 to stop')
-    if action == 2:
-        break
+    if current_event['event_type'] == 'monster':
+        print(f'you found a {current_event['name']}, level: {current_event['level']}') 
+        action = input('type 1 to continue, 2 to stop: ')
+        if action == 2:
+            break
+    elif current_event['event_type'] == 'merchant':
+        print(f'you found a {current_event['name']}')
+        action = input('type 1 to continue, 2 to stop: ')
+        if action == 2:
+            break
