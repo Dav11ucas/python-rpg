@@ -28,14 +28,18 @@ class player_class:
         ''')
         while True:
             try:
+                print('\n\n\nDISTRIBUTE YOUR POINTS')
                 atkp = int(input('ATKP = '))
                 hp = int(input('HP = '))
                 ap = int(input('AP = '))
-                sum = ap + hp + + atkp
-                if sum == 10:
-                    break
+                sum = ap + hp + atkp
+                if hp > 0 and ap > 0 and atkp > 0:
+                    if sum == 100:
+                        break
+                    else:
+                        print('ERROR: the sum of values need to be equal to 100')
                 else:
-                    print('the sum of values need to be equal to 10')
+                    print('ERROR: the values need to be positive')
             except:
                 print("it's necessary that you write a number")
     
@@ -69,7 +73,7 @@ class events_class:
         merchant_type = random.choice(merchant_type_list)
 
         if merchant_type == 'alquimist':
-            item = ['hp_potion', 'lv_potion']
+            item = ['hp potion', 'lv potion']
         elif merchant_type == 'blacksmith':
             item = ['sword', 'armor'] 
 
@@ -83,27 +87,61 @@ class events_class:
         event_list.append(merchant_dictionary)
 
         #gera um mercador e logo após o adiciona a lista de eventos.
-    
+
+    def treasure_generator_event():
+        treasure_type = ['power potion', 'strengh potion', 'hp potion', 'sandwich']
+        
+
 #objects
 player = player_class()
 events = events_class()
 
 #game
+os.system('cls')
 player.character_creation()
 
 for i in range(10):
     events.monster_generator_event()
     events.mercharnt_generator_event()
-    #talvez transformar essa ação em uma função de gerar eventos.
+    random.shuffle(event_list)
+    #transformar essa ação em uma função de gerar eventos.
 
 for current_event in event_list:
     if current_event['event_type'] == 'monster':
+        os.system('cls')
         print(f'you found a {current_event['name']}, level: {current_event['level']}') 
-        action = input('type 1 to continue, 2 to stop: ')
-        if action == 2:
+        try:
+            action = int(input('type 1 to continue, [any key] to stop: '))
+        except:
+            print('you must type an number')
+        if action != 1:
             break
+        else:
+            os.system('cls')
+            print(f'{current_event['name']}')
+            print(f'level: {current_event['level']}')
+            print(f'atkp: {current_event['atkp']}')
+            print(f'hp: {current_event['hp']}')
+            print('\n1 to atack')
+            while True:
+                try:
+                    action = int(input('>'))
+                except:
+                    print('you must type a number')
+                if action == 1:
+                    current_event['hp'] -= atkp
+                    hp -= current_event['atkp']
+                    print(f'\n{current_event['name']} hp:{current_event['hp']}') 
+                    print(f'{player_name} hp:{hp}')
+                    if hp <= 0:
+                        print('YOU DIED')
+                        action = input('>')
+                        break
+                else:
+                    break
     elif current_event['event_type'] == 'merchant':
+        os.system('cls')
         print(f'you found a {current_event['name']}')
-        action = input('type 1 to continue, 2 to stop: ')
-        if action == 2:
+        action = int(input('type 1 to continue, [any key] to stop: '))
+        if action != 1:
             break
