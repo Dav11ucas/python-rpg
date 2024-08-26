@@ -1,0 +1,12 @@
+[
+    {
+        "name": "skeleton",
+        "damage": 10,
+        "health": 10
+    },
+    {
+        "name": "slime",
+        "damage": 8,
+        "health": 5
+    }
+]

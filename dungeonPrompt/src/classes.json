@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Warrior",
+        "damage": 50,
+        "health": 50
+    },
+    {
+        "name": "Monk",
+        "damage": 70,
+        "health": 30
+    }
+]
